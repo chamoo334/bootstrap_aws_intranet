@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>The Intranet</title>
+      <meta name="description" content="The Intranet">
+      <style>
+         ._frame {
+         padding-top: 20px;
+         position: absolute;
+         margin: auto;
+         width: 100%;
+         text-align: center;}
+         .logo {position: absolute; width: 30%; padding: 20px 0 0 20px}
+         .slider {text-align: center;  margin-left: auto; margin-right: auto; padding-bottom: 20px;}
+         .slider-pic {width: 80%; margin-top: 10%}
+         .items {margin: auto; width: 80%; padding-top: 20px;}
+         .item-row {display: block; margin-top: 20px;}
+         .row-top {background-color: #9bcfdc; text-align: center}
+         .row-bottom {}
+         h3 {margin: 0; border: 1px solid black;}
+         p {border: 1px solid black; margin: 0; padding: 16px;}
+         .footer {background-color: black; color: white; margin: 80px -5px 0 0; padding: 10px; width: 100%; text-align: center;}
+         body {margin: 0}
+         .submissionForm {padding-left: 10%;}
+         hr {border: 3px solid rgb(159, 228, 225); width: 80%;}
+         input {margin: 3px 0 3px 0;}
+      </style>
+      <script>
+         window.addEventListener( "load", function () {
+           function sendData(data) {
+         	const XHR = new XMLHttpRequest();
+         
+         	// Set up our request
+         	XHR.open( "POST", "https://fehcr7ibdb.execute-api.us-east-1.amazonaws.com/Prod/snslambda" );
+         
+         	// Set headers
+         	XHR.setRequestHeader('Content-type', 'application/json');
+         	
+         	// The data sent is what the user provided in the form
+         	XHR.send(data);
+           }
+         
+         	// Access the form element
+           const form = document.getElementById( "subscription-form" );
+         
+           // Send the form data on submission
+           form.addEventListener( "submit", function ( event ) {
+         	event.preventDefault();
+         
+           // Construct the payload
+           data = '{"fn":"' + form.elements[0].value + '", "ln":"' + 
+           form.elements[1].value + '", "email":"' + form.elements[2].value + '"}';
+         	
+         	sendData(data);
+           } );
+         } );
+          
+      </script>
+   </head>
+   <body>
+      <img class="logo" src="https://skillstorm.myhubintranet.com/Portals/6747/Logo/SkillStorm_Logo_CMYK_300dpi.jpg?height=100" alt="">
+      <div class="_frame">
+         <div class="_text">EC2 instance ID: _instanceID_</div>
+         <div class="_text">EC2 Availability Zone: _AZ_</div>
+      </div>
+      <div class="slider">
+         <img class="slider-pic" src="https://skillstorm.myhubintranet.com/Portals/6747/Gallery/uploads/2020/9/8/SS_LinkedIn_Background_Blank.png?width=1206&format=jpg&1616523243219">
+      </div>
+      <hr>
+      <div class="submissionForm">
+         <h2>Sign up for updates and notifications!</h2>
+         <form id="subscription-form">
+            <label for="fname">First name:</label><br>
+            <input type="text" id="fname" name="fname" value=""><br>
+            <label for="lname">Last name:</label><br>
+            <input type="text" id="lname" name="lname" value=""><br>
+            <label for="email">Email:</label><br>
+            <input type="text" id="email" name="email" value=""><br><br>
+            <input type="submit" value="Submit">
+         </form>
+      </div>
+      <hr>
+      <div class="items">
+         <div class="item-row">
+            <div class="row-top">
+               <h3>Welcome to the Skillstorm VetTec Project 1 Website!</h3>
+            </div>
+            <div class="row-bottom">
+               <p>SkillStorm's Six Core Values: Passion, Fellow Stormers, Work & Play, Customers, Tenacity, Winning.</p>
+            </div>
+         </div>
+         <div class="item-row">
+            <div class="row-top">
+               <h3>Message from the Executives</h3>
+            </div>
+            <div class="row-bottom">
+               <p>Your trainer, Valerie Braun, wants you to use this website as a baseline for your Project 1. From here, you can be creative and innovative with your end result!</p>
+            </div>
+         </div>
+         <div class="item-row">
+            <div class="row-top">
+               <h3>Cool DevOps Tools</h3>
+            </div>
+            <div class="row-bottom">
+               <p>Cloudformation or Terraform: Which Iac Platform Is the Best Fit for You? While both CloudFormation and Terraform are robust IaC platforms that offer efficient configuration and automation of infrastructure provisioning, there are a few key differences in the way they operate. CloudFormation is an AWS tool, making it ideal for AWS users looking for a managed service. Terraform, on the other hand, is an open-source tool created by Hashicorp which provides the full flexibility, adaptability, and community that the open-source ecosystem has to offer. These differences can be impactful depending on your specific environment, use cases, and several other key factors.</p>
+            </div>
+         </div>
+         <div class="item-row">
+            <div class="row-top">
+               <h3>Social Media</h3>
+            </div>
+            <div class="row-bottom">
+               <p>View our Skillstorm account on LinkedIn and Facebook for company updates!</p>
+            </div>
+         </div>
+         <div class="item-row">
+            <div class="row-top">
+               <h3>Another header</h3>
+            </div>
+            <div class="row-bottom">
+               <p>Valerie's favorite food is Domenico's pizza from Long Beach, CA!</p>
+            </div>
+         </div>
+         <div class="item-row">
+            <div class="row-top">
+               <h3>2 Truths and a Lie</h3>
+            </div>
+            <div class="row-bottom">
+               <p>Valerie has never lived in 1 place longer than 5 years. Valerie's first career was as a professional recording artist. Valerie is allergic to acne medication.</p>
+            </div>
+         </div>
+      </div>
+      <div class="footer">
+      <span>© 2022 SkillStorm. All rights reserved. | Privacy Policy | Terms & Conditions<span/>
+      <div>
+   </body>
+</html>

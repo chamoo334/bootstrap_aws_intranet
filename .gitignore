@@ -1,0 +1,7 @@
+*.terraform/
+*.terraform.lock.hcl
+*terraform.tfvars
+*terraform.tfstate*
+*temp.*
+*notes*.md
+*.pdf
