@@ -9,6 +9,12 @@ output "vpc_data" {
     value = module.vpc.vpc_info
 }
 
+# output "security_groups" {
+#     value = {
+#         general = module.ec2.ec2_gen_sg
+#     }
+# }
+
 # output "" {
 #     value = {}
 # }

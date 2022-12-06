@@ -5,7 +5,8 @@ module "ec2_iam_role" {
   s3_bucket_arn  = "${var.s3_bucket_arn}"
 }
 
-# Create VPC with 2 public and 1 private subnet
+# Create VPC with public and private subnet count based on length of var.cidrs["public"]
+# and var.cidrs["private"]. # CIDRS must equal # subnet_azs
 module "vpc" {
   source = "./modules/complete_vpc"
   aws_project_tags = var.aws_project_tags
@@ -13,4 +14,19 @@ module "vpc" {
   cidrs = var.cidrs
   subnet_azs = var.subnet_azs
   ssh_key = var.ssh_key
+}
+
+# Create Autoscaling Group along with, sg, launch template,
+module "ec2" {
+  source = "./modules/ec2"
+  project_prefix = var.project_prefix
+  aws_project_tags = var.aws_project_tags
+  ami_info = var.ami_info
+  lt_info = {
+    "name" = "${var.project_prefix}-lt"
+    "instance_type" = var.lt_info["instance_type"]
+    "key" = var.ssh_key
+    "instance_profile_name" = module.ec2_iam_role.ec2_role.name
+  }
+  s3_bucket_info = var.s3_bucket_info
 }

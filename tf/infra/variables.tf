@@ -35,3 +35,18 @@ variable "ssh_key" {
     type = string
     description = "Key name without extension"
 }
+
+variable "ami_info" {
+    type        = map
+    description = "Specify name and owner."
+}
+
+variable "lt_info" {
+    type = map
+    description = "Specify instance_type."
+}
+
+variable "s3_bucket_info" {
+    type        = map
+    description = "Specify bucket name and key of object."
+}
