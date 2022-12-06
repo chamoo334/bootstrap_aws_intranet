@@ -1,8 +1,3 @@
-variable "aws_region" {
-    type        = string
-    description = "AWS Region to deploy resources."
-}
-
 variable "aws_project_tags" {
     type        = map(object({
         tag_key = string
@@ -14,11 +9,6 @@ variable "aws_project_tags" {
 variable "project_prefix" {
     type        = string
     description = "Prefix name for all resources created."
-}
-
-variable "s3_bucket_arn" {
-    type        = string
-    description = "ARN of associated s3 bucket"
 }
 
 variable "cidrs" {

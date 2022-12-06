@@ -17,7 +17,7 @@ resource "aws_iam_policy" "project_ec2_s3_policy" {
             ],
             "Resource": ["${var.s3_bucket_arn}",
                 "${var.s3_bucket_arn}/*",
-                "${var.s3_bucket_arn}/source*",
+                "${var.s3_bucket_arn}/source/",
                 "${var.s3_bucket_arn}/source/*",
                 "${var.s3_bucket_arn}/source/static/*",
                 "${var.s3_bucket_arn}/source/templates/*"

@@ -5,6 +5,10 @@ output "iam_role_profile" {
     }
 }
 
+output "vpc_data" {
+    value = module.vpc.vpc_info
+}
+
 # output "" {
 #     value = {}
 # }
