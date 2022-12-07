@@ -1,75 +1,49 @@
-# resource "aws_autoscaling_group" "asg" {
-#     name = "${var.project_prefix}-asg"
-#     force_delete              = true
-#     termination_policies      = ["OldestInstance"]
-    
-#     #sizes
-#     max_size                  = var.asg_info["max"]
-#     min_size                  = var.asg_info["min"]
-#     desired_capacity          = var.asg_info["desired"]
-#     health_check_grace_period = var.asg_info["health_check_period"]
-#     health_check_type         = var.asg_info["health_check_type"]
-#     load_balancers = ["${aws_lb.alb.id}"]
-#     enabled_metrics = [
-#         "GroupMinSize",
-#         "GroupMaxSize",
-#         "GroupDesiredCapacity",
-#         "GroupInServiceInstances",
-#         "GroupTotalInstances"
-#     ]
-#     metrics_granularity = "1Minute"
-#     vpc_zone_identifier  = var.public_subnets
+# Create autoscaling group
+# Automatically includes the following tags: launch teamplate id, asg name, launchtemplate version
+resource "aws_autoscaling_group" "asg" {
+    name                    = "${var.project_prefix}-asg"
+    vpc_zone_identifier     = var.public_subnets
+    force_delete            = true
+    termination_policies    = ["OldestInstance"] #"OldestLaunchTemplate"
+    target_group_arns       = ["${aws_lb_target_group.alb_tg.arn}"]
 
-#     launch_template {
-#         id      = aws_launch_template.project_launch_template.id
-#         version = "${aws_launch_template.project_launch_template.latest_version}" #ensures update triggers refresh
-#     }
+    #sizes
+    max_size           = var.asg_info["max"]
+    min_size           = var.asg_info["min"]
+    desired_capacity   = var.asg_info["desired"]
 
-#     #refresh when configuration altered. 50% of instances will stay active
-#     #automatically triggered by a change to launch template
-#     instance_refresh {
-#         strategy = "Rolling"
-#         preferences {
-#             min_healthy_percentage = 50
-#         }
-#         triggers = ["tag"]
-#     }
-#     # Required to redeploy without an outage.
-#     lifecycle {
-#         create_before_destroy = true
-#     }
+    #health checks
+    health_check_type           = var.asg_info["health_check_type"]
+    health_check_grace_period   = var.asg_info["health_check_period"]
 
-#     #ec2 tags
-#     tag {
-#         key                 = "${var.aws_project_tags.name_tag.tag_key}"
-#         value               = "${var.aws_project_tags.name_tag.tag_value}"
-#         propagate_at_launch = true
-#     }
-#     tag {
-#         key                 = "${var.aws_project_tags.purpose_tag.tag_key}"
-#         value               = "${var.aws_project_tags.purpose_tag.tag_value}"
-#         propagate_at_launch = true
-#     }
+    launch_template {
+        id       = aws_launch_template.project_launch_template.id
+        version  = "${aws_launch_template.project_launch_template.latest_version}"
+    }
 
-#     depends_on =[aws_lb.alb]
-# }
+    # automatically triggered by change to launch_template
+    instance_refresh {
+        strategy = "Rolling"
+        preferences {
+            min_healthy_percentage = 50
+        }
+    }
+}
 
-# Scale up
-# resource "aws_autoscaling_policy" "asg_up" {
-#   name = "${var.project_prefix}_policy_up"
-#   scaling_adjustment = 1
-#   adjustment_type = "ChangeInCapacity"
-#   cooldown = 300
-#   autoscaling_group_name = "${aws_autoscaling_group.asg.name}"
-# }
+#asg scale up policy
+resource "aws_autoscaling_policy" "scale_up_policy" {
+  name                   = "${var.project_prefix}-asg-up-policy"
+  scaling_adjustment     = 1
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 300
+  autoscaling_group_name = aws_autoscaling_group.asg.name
+}
 
-# # Scale down
-# resource "aws_autoscaling_policy" "asg_down" {
-#   name = "${var.project_prefix}_policy_down"
-#   scaling_adjustment = 1
-#   adjustment_type = "ChangeInCapacity"
-#   cooldown = 300
-#   autoscaling_group_name = "${aws_autoscaling_group.asg.name}"
-# }
-
-# tf apply -target=module.ec2.aws_autoscaling_group.asg --auto-approve
+#asg scale down policy
+resource "aws_autoscaling_policy" "scale_down_policy" {
+  name                   = "${var.project_prefix}-asg-down-policy"
+  scaling_adjustment     = -1
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 300
+  autoscaling_group_name = aws_autoscaling_group.asg.name
+}
