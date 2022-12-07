@@ -9,12 +9,14 @@ output "vpc_data" {
     value = module.vpc.vpc_info
 }
 
-# output "security_groups" {
-#     value = {
-#         general = module.ec2.ec2_gen_sg
-#     }
-# }
+output "security_groups" {
+    value = module.ec2.security_groups
+}
 
-# output "" {
-#     value = {}
-# }
+output "launch_template" {
+    value = module.ec2.launch_template
+}
+
+output "alb" {
+    value = module.ec2.alb
+}

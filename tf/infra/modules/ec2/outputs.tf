@@ -14,3 +14,21 @@ output "security_groups" {
         }
     }
 }
+
+output "launch_template" {
+    value = {
+        "name" = aws_launch_template.project_launch_template.name
+        "id" = aws_launch_template.project_launch_template.id
+    }
+}
+
+output "alb" {
+    value = {
+        "name" = aws_lb.alb.name
+        "id" = aws_lb.alb.id
+        "target_group" ={
+            "name" = aws_lb_target_group.alb_tg.name
+            "id" = aws_lb_target_group.alb_tg.id
+        }
+    }
+}
