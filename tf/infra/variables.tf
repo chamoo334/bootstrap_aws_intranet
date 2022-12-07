@@ -50,3 +50,11 @@ variable "s3_bucket_info" {
     type        = map
     description = "Specify bucket name and key of object."
 }
+
+variable "asg_info"{
+    type = map
+}
+
+variable "alb_target"{
+    type = string
+}

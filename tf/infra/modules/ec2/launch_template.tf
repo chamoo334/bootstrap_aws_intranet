@@ -23,7 +23,7 @@ Content-Disposition: attachment; filename="userdata.txt"
 #!/bin/bash
 sudo su
 yum update -y
-yum install httpd -y
+yum install httpd mod_wsgi python-pip -y
 systemctl enable httpd
 systemctl start httpd
 #aws s3 cp s3://cmoore-gen-bucket/source /home/ec2-user/test_cp --recursive
@@ -53,11 +53,15 @@ resource "aws_launch_template" "project_launch_template" {
 
     network_interfaces {
         associate_public_ip_address = true
-        security_groups = [resource.aws_security_group.project_gen_sg.id]
+        security_groups = [aws_security_group.public_sg.id]
     }
 
     iam_instance_profile {
       name = var.lt_info["instance_profile_name"]
+    }
+
+    lifecycle {
+      create_before_destroy = true
     }
 
     tag_specifications {

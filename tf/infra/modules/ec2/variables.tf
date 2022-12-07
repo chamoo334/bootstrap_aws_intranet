@@ -25,3 +25,26 @@ variable "s3_bucket_info" {
     type        = map
     description = "Specify bucket name and key of object."
 }
+
+variable "vpc_id" {
+    type        = string
+    description = "Specify VPC of created security groups."
+}
+
+variable "public_subnets" {
+    type        = list(string)
+    description = "List of public subnet ids"
+}
+
+variable "private_subnets" {
+    type        = list(string)
+    description = "List of private subnet ids"
+}
+
+variable "asg_info"{
+    type = map
+}
+
+variable "alb_target"{
+    type = string
+}

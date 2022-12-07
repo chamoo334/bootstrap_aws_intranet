@@ -29,4 +29,9 @@ module "ec2" {
     "instance_profile_name" = module.ec2_iam_role.ec2_role.name
   }
   s3_bucket_info = var.s3_bucket_info
+  vpc_id  = module.vpc.vpc_info.id
+  public_subnets = module.vpc.vpc_info.subnets.public.ids
+  private_subnets = module.vpc.vpc_info.subnets.public.ids
+  asg_info = var.asg_info
+  alb_target = var.alb_target
 }
