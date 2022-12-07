@@ -1,5 +1,7 @@
 # Create autoscaling group
 # Automatically includes the following tags: launch teamplate id, asg name, launchtemplate version
+# Healthcheck types: https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-add-elb-healthcheck.html
+# Selected ELB to determine instance health based on additional load balancer tests
 resource "aws_autoscaling_group" "asg" {
     name                    = "${var.project_prefix}-asg"
     vpc_zone_identifier     = var.public_subnets
@@ -31,19 +33,23 @@ resource "aws_autoscaling_group" "asg" {
 }
 
 #asg scale up policy
+#uses default policy_type (simple scaling) which requires cloudwatch alarm
+#https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-simple-step.html
 resource "aws_autoscaling_policy" "scale_up_policy" {
-  name                   = "${var.project_prefix}-asg-up-policy"
-  scaling_adjustment     = 1
-  adjustment_type        = "ChangeInCapacity"
-  cooldown               = 300
-  autoscaling_group_name = aws_autoscaling_group.asg.name
+    name                   = "${var.project_prefix}-asg-up-policy"
+    scaling_adjustment     = 1
+    adjustment_type        = "ChangeInCapacity"
+    cooldown               = 30 #only supported for policy type SimpleScaling
+    autoscaling_group_name = aws_autoscaling_group.asg.name
 }
 
 #asg scale down policy
+#uses default policy_type (simple scaling) which requires cloudwatch alarm
+#https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-simple-step.html
 resource "aws_autoscaling_policy" "scale_down_policy" {
   name                   = "${var.project_prefix}-asg-down-policy"
   scaling_adjustment     = -1
   adjustment_type        = "ChangeInCapacity"
-  cooldown               = 300
+  cooldown               = 30
   autoscaling_group_name = aws_autoscaling_group.asg.name
 }

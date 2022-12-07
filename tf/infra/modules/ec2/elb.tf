@@ -31,10 +31,12 @@ resource "aws_lb" "alb" {
 }
 
 #Attach target group
+#Must run separately
 resource "aws_lb_target_group_attachment" "alb_tg_attachment" {
     target_group_arn = aws_lb_target_group.alb_tg.arn
     target_id        = aws_lb.alb.arn
     port             = 80
+    depends_on = [aws_lb_target_group.alb_tg]
 }
 
 #Create Listener for HTTP(80)

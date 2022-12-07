@@ -26,6 +26,7 @@ output "alb" {
     value = {
         "name" = aws_lb.alb.name
         "id" = aws_lb.alb.id
+        "dns" = aws_lb.alb.dns_name
         "target_group" ={
             "name" = aws_lb_target_group.alb_tg.name
             "id" = aws_lb_target_group.alb_tg.id
