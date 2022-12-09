@@ -13,3 +13,37 @@ Everything you need to recreate the above is found within this repo. There are a
 3. Create the resources using Terraform CLI
    1. Hint: Order matters.
 4. Follow the additional instructions on the website once your VPC and autoscaling group are up.
+
+## General Project Structure
+Main directory is `bootstrap_aws_intranet/tf/infra
+```
+BOOTSTRAP_AWS_INTRANET.
+|source
+|tf
+|infra
+|remote
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+```
