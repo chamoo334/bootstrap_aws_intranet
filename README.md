@@ -18,32 +18,21 @@ Everything you need to recreate the above is found within this repo. There are a
 Main directory is `bootstrap_aws_intranet/tf/infra
 ```
 BOOTSTRAP_AWS_INTRANET.
-|source
-|tf
-|infra
-|remote
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
+|   .gitignore
+|   README.md
+|-- source/
+|    |   images/
+|    |   index.thml
+|-- tf/
+|    |   infra/
+|          |   example.tfvars
+|          |   main.tf
+|          |   outputs.tf
+|          |   providers.tf
+|          |   variables.tf
+|          |   modules/
+|                 |   complete_vpc
+|                 |   ec2
+|                 |   iam
+|    |   remote/
 ```
