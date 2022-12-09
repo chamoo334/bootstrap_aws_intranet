@@ -3,5 +3,6 @@
 *terraform.tfvars
 *terraform.tfstate*
 *temp.*
+temp-demo.md
 *notes*.md
 *.pdf

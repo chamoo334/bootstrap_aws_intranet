@@ -18,6 +18,8 @@ resource "aws_autoscaling_group" "asg" {
     health_check_type           = var.asg_info["health_check_type"]
     health_check_grace_period   = var.asg_info["health_check_period"]
 
+    enabled_metrics = []
+
     launch_template {
         id       = aws_launch_template.project_launch_template.id
         version  = "${aws_launch_template.project_launch_template.latest_version}"
@@ -39,7 +41,7 @@ resource "aws_autoscaling_policy" "scale_up_policy" {
     name                   = "${var.project_prefix}-asg-up-policy"
     scaling_adjustment     = 1
     adjustment_type        = "ChangeInCapacity"
-    cooldown               = 30 #only supported for policy type SimpleScaling
+    cooldown               = 60 #only supported for policy type SimpleScaling
     autoscaling_group_name = aws_autoscaling_group.asg.name
 }
 
@@ -47,9 +49,23 @@ resource "aws_autoscaling_policy" "scale_up_policy" {
 #uses default policy_type (simple scaling) which requires cloudwatch alarm
 #https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-simple-step.html
 resource "aws_autoscaling_policy" "scale_down_policy" {
-  name                   = "${var.project_prefix}-asg-down-policy"
-  scaling_adjustment     = -1
-  adjustment_type        = "ChangeInCapacity"
-  cooldown               = 30
-  autoscaling_group_name = aws_autoscaling_group.asg.name
+    name                   = "${var.project_prefix}-asg-down-policy"
+    scaling_adjustment     = -1
+    adjustment_type        = "ChangeInCapacity"
+    cooldown               = 60
+    autoscaling_group_name = aws_autoscaling_group.asg.name
 }
+
+#asg ram
+# resource "aws_autoscaling_policy" "scale_down_policy" {
+#     name                   = "${var.project_prefix}-asg-down-policy"
+#     scaling_adjustment     = 1
+#     adjustment_type        = "ChangeInCapacity"
+#     policy_type            = "TargetTrackingScaling"
+#     cooldown               = 30
+#     autoscaling_group_name = aws_autoscaling_group.asg.name
+# }
+
+# sudo amazon-linux-extras install epel -y
+# sudo yum install stress -y
+# stress --cpu  --timeout 75

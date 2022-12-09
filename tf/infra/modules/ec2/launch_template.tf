@@ -23,7 +23,8 @@ Content-Disposition: attachment; filename="userdata.txt"
 #!/bin/bash
 sudo su
 yum update -y
-yum install httpd mod_wsgi python-pip -y
+sudo amazon-linux-extras install epel -y
+yum install httpd mod_wsgi stress -y
 systemctl enable httpd
 systemctl start httpd
 #aws s3 cp s3://cmoore-gen-bucket/source /home/ec2-user/test_cp --recursive

@@ -20,3 +20,7 @@ output "launch_template" {
 output "alb" {
     value = module.ec2.alb
 }
+
+# output "private_instances" {
+#     value = module.ec2.private_instances
+# }
