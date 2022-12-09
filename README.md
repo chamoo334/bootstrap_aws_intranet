@@ -31,8 +31,8 @@ BOOTSTRAP_AWS_INTRANET.
 |          |   providers.tf
 |          |   variables.tf
 |          |   modules/
-|                 |   complete_vpc
-|                 |   ec2
-|                 |   iam
+|                 |   complete_vpc/
+|                 |   ec2/
+|                 |   iam/
 |    |   remote/
 ```
