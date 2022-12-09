@@ -23,7 +23,7 @@ Content-Disposition: attachment; filename="userdata.txt"
 #!/bin/bash
 sudo su
 yum update -y
-sudo amazon-linux-extras install epel -y
+amazon-linux-extras install epel -y
 yum install httpd mod_wsgi stress -y
 systemctl enable httpd
 systemctl start httpd
