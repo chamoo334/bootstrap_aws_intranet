@@ -36,3 +36,6 @@ BOOTSTRAP_AWS_INTRANET.
 |                 |   iam/
 |    |   remote/
 ```
+
+## Result
+![Fianl VPC with EC2 instances](http://github.com/chamoo334/bootstrap_aws_intranet/blob/main/source/images/final_vpc.png.png?raw=true)
